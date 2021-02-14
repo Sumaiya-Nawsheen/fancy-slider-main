@@ -74,7 +74,9 @@ const createSlider = () => {
   `;
 
         sliderContainer.appendChild(prevNext)
-        document.querySelector('.main').style.display = 'block';
+            // (extra)animation in sliders
+        document.querySelector('.main').setAttribute(
+            "style", "display:block ; animation: zoom 3s linear infinite");
         // hide image aria
         imagesArea.style.display = 'none';
         sliders.forEach(slide => {
@@ -127,11 +129,13 @@ const changeSlide = (index) => {
 searchBtn.addEventListener('click', function() {
     document.querySelector('.main').style.display = 'none';
     clearInterval(timer);
-    const search = document.getElementById('search');
-    if (search.value == '') {
+
+    // (extra) error show
+    const searchName = document.getElementById('search').value.trim();
+    if (searchName == '') {
         displayError('Please input anything as your interest!');
     } else {
-        getImages(search.value)
+        getImages(searchName)
         sliders.length = 0;
     }
 
@@ -141,6 +145,7 @@ sliderBtn.addEventListener('click', function() {
     createSlider()
 })
 
+// display error msg (extra)
 const displayError = error => {
     const errorTag = document.getElementById('error-message');
     errorTag.innerText = error;
