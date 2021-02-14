@@ -40,19 +40,19 @@ const getImages = (query) => {
     fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
         .then(response => response.json())
         .then(data => showImages(data.hits))
-        .catch(err => console.log(err))
+        .catch(error => displayError("Please try another thing"));
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
     let element = event.target;
-    element.classList.add('added');
-
+    element.classList.toggle('added');
+    // sliders.filter(selectItem)
     let item = sliders.indexOf(img);
     if (item === -1) {
         sliders.push(img);
     } else {
-        alert('Hey, Already added !')
+        sliders.splice(item);
     }
 }
 var timer
@@ -62,8 +62,6 @@ const createSlider = () => {
         alert('Select at least 2 image.')
         return;
     }
-
-
     const duration = document.getElementById('duration').value * 100 || 1000;
     if (duration > 0) {
         // crate slider previous next area
@@ -130,10 +128,20 @@ searchBtn.addEventListener('click', function() {
     document.querySelector('.main').style.display = 'none';
     clearInterval(timer);
     const search = document.getElementById('search');
-    getImages(search.value)
-    sliders.length = 0;
+    if (search.value == '') {
+        displayError('Please input anything as your interest!');
+    } else {
+        getImages(search.value)
+        sliders.length = 0;
+    }
+
 })
 
 sliderBtn.addEventListener('click', function() {
     createSlider()
 })
+
+const displayError = error => {
+    const errorTag = document.getElementById('error-message');
+    errorTag.innerText = error;
+}
