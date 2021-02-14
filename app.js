@@ -13,6 +13,14 @@ let sliders = [];
 // to create your own api key
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
+// search on Enter btn press
+document.getElementById("search")
+    .addEventListener("keypress", function(event) {
+        if (event.key == "Enter") {
+            searchBtn.click();
+        }
+    });
+
 // show images 
 const showImages = (images) => {
     imagesArea.style.display = 'block';
